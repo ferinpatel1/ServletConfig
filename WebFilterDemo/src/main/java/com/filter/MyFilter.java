@@ -20,14 +20,22 @@ public class MyFilter extends HttpFilter implements Filter {
 		user u = new user();
 		String action = request.getParameter("action");
 		if(action.equalsIgnoreCase("signup")) {
+			u.setFname(request.getParameter("fname"));;
+			u.setLname(request.getParameter("lname"));;
 			u.setEmail(request.getParameter("email"));
+			u.setMobile(Long.parseLong(request.getParameter("mobile")));;
+			u.setPassword(request.getParameter("password"));;
 			boolean b=userdao.checkemail(u);
+			
 			if(b) {
 				chain.doFilter(request, response);
 		}
 			else {
 				request.setAttribute("msg"," Mail Alredy Exist ");
+				request.setAttribute("u",u);
 				request.getRequestDispatcher("signup.jsp").forward(request, response);;
+
+				
 			}
 		}
 		
